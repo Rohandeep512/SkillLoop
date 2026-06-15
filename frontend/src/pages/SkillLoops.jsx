@@ -13,7 +13,11 @@ export default function SkillLoops() {
       <h1 className='text-3xl font-semibold tracking-tight mb-1'>Skill Loops</h1>
       <p className='text-sm text-muted-light dark:text-muted-dark mb-8'>Circular skill chains where everyone teaches and learns</p>
       {loops.length === 0
-        ? <p className='text-sm text-muted-light dark:text-muted-dark'>No loops found yet. More users with complementary skills needed.</p>
+        ? <div className='flex flex-col items-center py-16 text-center'>
+            <p className='text-3xl mb-3'>↻</p>
+            <p className='font-medium mb-1'>No loops detected yet</p>
+            <p className='text-sm text-muted-light dark:text-muted-dark'>More users with complementary skills needed to form a chain.</p>
+         </div>
         : loops.map((loop, i) => (
           <div key={i} className='bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl p-5 mb-4'>
             <p className='text-xs font-medium uppercase tracking-widest text-muted-light dark:text-muted-dark mb-3'>Loop {i + 1}</p>

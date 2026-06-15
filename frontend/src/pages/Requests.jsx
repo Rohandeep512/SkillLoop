@@ -21,7 +21,7 @@ export default function Requests() {
         <div key={label} className='mb-8'>
           <p className='text-xs font-medium uppercase tracking-widest text-muted-light dark:text-muted-dark mb-3'>{label}</p>
           {list.length === 0
-            ? <p className='text-sm text-muted-light dark:text-muted-dark'>None</p>
+            ? <p className='text-sm text-muted-light dark:text-muted-dark italic'>Nothing here yet</p>
             : list.map(r => <BarterRequestCard key={r._id} request={r} onUpdate={load} />)
           }
         </div>

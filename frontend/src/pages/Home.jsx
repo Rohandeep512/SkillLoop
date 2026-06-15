@@ -13,7 +13,9 @@ export default function Home() {
       <div className='grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 mb-24 items-center'>
         <div>
           <p className='text-xs font-medium uppercase tracking-widest text-accent-light dark:text-accent-dark mb-4'>Peer skill exchange</p>
-          <h1 className='text-5xl font-semibold tracking-tight leading-tight mb-5'>Trade what you know.<br />Learn what you don't.</h1>
+          <h1 className='text-5xl font-extrabold tracking-tight leading-tight mb-5'>
+  Trade what you <span className='text-accent-light dark:text-accent-dark'>know.</span><br />Learn what you don't.
+</h1>
           <p className='text-muted-light dark:text-muted-dark mb-8 text-base'>No money. No subscriptions. Just people teaching each other what they know.</p>
           <div className='flex gap-3'>
             <Link to={user ? '/browse' : '/register'} className='btn-primary px-6 py-2.5'>Get started</Link>

@@ -11,9 +11,9 @@ body {
     @apply w-full px-4 py-2.5 rounded-md border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-primary-light dark:text-primary-dark text-sm outline-none focus:border-accent-light dark:focus:border-accent-dark transition-colors;
   }
   .btn-primary {
-    @apply bg-accent-light dark:bg-accent-dark text-white dark:text-bg-dark text-sm font-medium px-4 py-2.5 rounded-md hover:opacity-90 transition-opacity;
+    @apply bg-accent-light dark:bg-accent-dark text-white dark:text-bg-dark text-sm font-medium px-4 py-2.5 rounded-md hover:opacity-90 active:scale-95 transition-all;
   }
   .btn-ghost {
-    @apply border border-border-light dark:border-border-dark text-sm px-4 py-2 rounded-md hover:bg-surface-light dark:hover:bg-surface-dark transition-colors;
+    @apply border border-border-light dark:border-border-dark text-sm px-4 py-2 rounded-md text-muted-light dark:text-muted-dark hover:border-accent-light dark:hover:border-accent-dark hover:text-accent-light dark:hover:text-accent-dark transition-all;
   }
 }

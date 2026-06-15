@@ -17,7 +17,7 @@ export default function Browse() {
   )
 
   return (
-    <div>
+    <div className='bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl p-5 hover:border-accent-light/50 dark:hover:border-accent-dark/50 transition-all hover:shadow-sm'>
       <h1 className='text-3xl font-semibold tracking-tight mb-1'>Browse Skills</h1>
       <p className='text-sm text-muted-light dark:text-muted-dark mb-6'>Find someone to exchange skills with</p>
       <input className='input max-w-sm mb-8' placeholder='Search by skill or name...' value={search} onChange={e => setSearch(e.target.value)} />

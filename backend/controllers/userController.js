@@ -1,5 +1,5 @@
 import User from '../models/User.js'
-import { getMatchExplanation } from '../utils/gemini.js'
+import { getMatchExplanation } from '../utils/openrouter.js'
 import { detectLoops } from '../utils/loopDetection.js'
 
 
