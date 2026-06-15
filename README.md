@@ -20,7 +20,7 @@ Instead of paying for courses or finding tutors, users can create barter request
 
 ### AI-Powered Recommendations
 
-* Gemini AI suggests learning resources.
+* OpenRouter AI suggests learning resources.
 * Personalized recommendations based on requested skills.
 * Context-aware resource discovery.
 
@@ -65,7 +65,7 @@ Instead of paying for courses or finding tutors, users can create barter request
 
 ### AI Integration
 
-* Google Gemini API
+* OpenRouter API
 
 ### Authentication
 
@@ -80,7 +80,7 @@ Instead of paying for courses or finding tutors, users can create barter request
 2. Matching engine identifies compatible users.
 3. Graph algorithms evaluate possible barter chains.
 4. Loop detection validates exchange feasibility.
-5. Gemini AI recommends relevant learning resources.
+5. OpenRouter AI recommends relevant learning resources.
 6. Users exchange skills and track progress.
 
 ---
@@ -153,7 +153,7 @@ MONGO_URI=your_mongodb_connection_string
 
 JWT_SECRET=your_jwt_secret
 
-GEMINI_API_KEY=your_gemini_api_key
+OPENROUTER_API_KEY=your_openrouter_api_key
 ```
 
 ### Run Backend
