@@ -32,3 +32,17 @@ export const getMyRequests = async (req, res) => {
     
   }
 }
+export const sendLoopRequests = async (req, res) => {
+  try {
+    const { userIds } = req.body
+    const requests = []
+    for (let i = 0; i < userIds.length; i++) {
+      const next = userIds[(i + 1) % userIds.length]
+      requests.push({ sender: userIds[i], receiver: next, skillOffered: 'Loop Match', skillWanted: 'Loop Match', isLoopMatch: true })
+    }
+    await BarterRequest.insertMany(requests)
+    res.json({ message: 'Loop requests sent' })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}

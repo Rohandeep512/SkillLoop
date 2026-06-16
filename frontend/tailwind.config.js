@@ -5,14 +5,28 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: { light: '#F0F4F8', dark: '#0C0F0D' },
-        surface: { light: '#FFFFFF', dark: '#131A15' },
-        border: { light: '#CCDAE8', dark: '#1C2B20' },
-        accent: { light: '#1A7A4A', dark: '#2ECC71' },
-        primary: { light: '#0D1820', dark: '#F0F7F2' },
-        muted: { light: '#5A7080', dark: '#6B8F74' },
+        // Light: Off-white background, not blue-tinted
+        // Dark: Deep, almost-black charcoal, not pure black
+        bg: { light: '#F9FAFB', dark: '#030712' }, 
+        
+        // Surface: Crisp white vs Deep slate
+        surface: { light: '#FFFFFF', dark: '#111827' },
+        
+        // Border: Subtler, less "thick"
+        border: { light: '#E5E7EB', dark: '#1F2937' },
+        
+        // Accent: Using a more vibrant "Electric" color
+        accent: { light: '#2563EB', dark: '#3B82F6' },
+        
+        // Text: High contrast
+        primary: { light: '#111827', dark: '#F9FAFB' },
+        muted: { light: '#6B7280', dark: '#9CA3AF' },
       },
       fontFamily: { sans: ['Inter', 'sans-serif'] },
+      // Added: This helps with the "dull" look by creating soft layers
+      boxShadow: {
+        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+      },
     },
   },
   plugins: [],

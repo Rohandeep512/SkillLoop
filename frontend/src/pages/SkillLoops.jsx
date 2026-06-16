@@ -1,13 +1,32 @@
 import { useEffect, useState } from 'react'
 import api from '../api/axios'
+import { useAuth } from '../context/AuthContext'
 import { RefreshCcw, User, ArrowRight } from 'lucide-react'
 
 export default function SkillLoops() {
   const [loops, setLoops] = useState([])
+  const [joined, setJoined] = useState({})
+  const { user } = useAuth()
 
   useEffect(() => {
-    api.get('/users/loops').then(r => setLoops(r.data.loops))
-  }, [])
+  api.get('/users/loops').then(r => {
+    const all = r.data.loops
+    const sorted = [...all].sort((a, b) => {
+      const aIn = a.some(u => u._id === user?.id)
+      const bIn = b.some(u => u._id === user?.id)
+      return bIn - aIn
+    })
+    setLoops(sorted)
+  })
+}, [])
+
+  const joinLoop = async (loop, i) => {
+    try {
+      const userIds = loop.map(u => u._id)
+      await api.post('/barter/loop', { userIds })
+      setJoined(p => ({ ...p, [i]: true }))
+    } catch { alert('Could not join loop') }
+  }
 
   return (
     <div className='max-w-4xl mx-auto px-4 py-8'>
@@ -26,35 +45,38 @@ export default function SkillLoops() {
         </div>
       ) : (
         <div className="grid gap-6">
-          {loops.map((loop, i) => (
-            <div key={i} className='bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-8 hover:border-green-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/5'>
-              <div className="flex items-center justify-between mb-8">
-                <span className='text-xs font-black uppercase tracking-widest text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-500/10 px-3 py-1 rounded-full'>
-                  Loop #{i + 1}
-                </span>
-                <RefreshCcw className="w-5 h-5 text-gray-400" />
-              </div>
-              
-              <div className='flex items-center flex-wrap gap-3'>
-                {loop.map((user, j) => (
-                  <div key={user._id} className="flex items-center gap-3">
-                    <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-full">
-                      <User className="w-4 h-4 text-gray-500" />
-                      <span className='text-sm font-bold text-gray-900 dark:text-white'>{user.name}</span>
+          {loops.map((loop, i) => {
+            const inLoop = loop.some(u => u._id === user?.id)
+            return (
+              <div key={i} className='bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-8 hover:border-green-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/5'>
+                <div className="flex items-center justify-between mb-8">
+                  <span className='text-xs font-black uppercase tracking-widest text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-500/10 px-3 py-1 rounded-full'>Loop #{i + 1}</span>
+                  <RefreshCcw className="w-5 h-5 text-gray-400" />
+                </div>
+                <div className='flex items-center flex-wrap gap-3'>
+                  {loop.map((u) => (
+                    <div key={u._id} className="flex items-center gap-3">
+                      <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-full">
+                        <User className="w-4 h-4 text-gray-500" />
+                        <span className='text-sm font-bold text-gray-900 dark:text-white'>{u.name}</span>
+                      </div>
+                      <ArrowRight className='w-5 h-5 text-green-500/50' />
                     </div>
-                    {/* Arrow connecting the sequence */}
-                    <ArrowRight className='w-5 h-5 text-green-500/50' />
-                  </div>
-                ))}
-                
-                {/* Visual "Back to start" */}
-                <div className="flex items-center gap-2 text-green-600 dark:text-green-400 font-bold bg-green-50 dark:bg-green-500/10 px-4 py-2 rounded-full border border-green-200 dark:border-green-500/20">
-                  <RefreshCcw className="w-4 h-4" />
-                  <span className='text-sm'>Close Loop</span>
+                  ))}
+                  {inLoop && (
+                    <button
+                      onClick={() => joinLoop(loop, i)}
+                      disabled={joined[i]}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-bold transition-all ${joined[i] ? 'text-gray-400 border-gray-300 dark:border-gray-700 cursor-default' : 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-500/10 border-green-200 dark:border-green-500/20 hover:bg-green-100 dark:hover:bg-green-500/20'}`}
+                    >
+                      <RefreshCcw className="w-4 h-4" />
+                      {joined[i] ? 'Joined ✓' : 'Join Loop'}
+                    </button>
+                  )}
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       )}
     </div>

@@ -1,6 +1,7 @@
 export const detectLoops = (users) => {
   const loops = []
   const graph = {}
+  const seen = new Set()
 
   users.forEach(u => {
     graph[u._id] = []
@@ -13,7 +14,12 @@ export const detectLoops = (users) => {
 
   const dfs = (startId, currentId, path, visited) => {
     if (path.length > 1 && currentId === startId) {
-      loops.push([...path])
+      if (path.length < 3) return
+      const ids = path.map(u => u._id.toString())
+      let minIdx = 0
+      for (let i = 1; i < ids.length; i++) if (ids[i] < ids[minIdx]) minIdx = i
+      const sig = [...ids.slice(minIdx), ...ids.slice(0, minIdx)].join('->')
+      if (!seen.has(sig)) { seen.add(sig); loops.push([...path]) }
       return
     }
     if (path.length > 5) return

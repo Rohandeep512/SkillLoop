@@ -10,21 +10,22 @@ export default function SkillCard({ user }) {
   const navigate = useNavigate()
   const [aiNote, setAiNote] = useState('')
   const [loading, setLoading] = useState(false)
+  const [sent, setSent] = useState(() => user?._id ? !!localStorage.getItem(`sent_${user._id}`) : false)
 
- const sendRequest = async () => {
-  if (!me) return navigate('/login')
-  try {
-    const { data: myProfile } = await api.get('/users/me')
-    await api.post('/barter', {
-      receiver: user._id,
-      skillOffered: myProfile.skillsOffered?.[0] || 'General',
-      skillWanted: user.skillsOffered?.[0] || 'General',
-    })
-    alert('Request sent!')
-  } catch (err) {
-    alert(err.response?.data?.message || 'Could not send request')
+  const sendRequest = async () => {
+    if (!me) return navigate('/login')
+    try {
+        const { data: myProfile } = await api.get('/users/me')
+        await api.post('/barter', {
+          receiver: user._id,
+          skillOffered: myProfile.skillsOffered?.[0] || 'General',
+          skillWanted: user.skillsOffered?.[0] || 'General',
+        })
+        setSent(true)
+        localStorage.setItem(`sent_${user._id}`, true)
+    } catch (err) { console.error(err) }
   }
-}
+
   const fetchAI = async () => {
     setLoading(true)
     try {
@@ -35,24 +36,44 @@ export default function SkillCard({ user }) {
   }
 
   return (
-    <div className='bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl p-5'>
-      <div className='flex justify-between items-start mb-3'>
+    <div className='group bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-6 transition-all duration-500 ease-out hover:border-green-500/30 hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-black/40 hover:-translate-y-1'>
+      <div className='flex justify-between items-start mb-4'>
         <div>
-          <p className='font-medium text-base'>{user.name}</p>
-          <p className='text-xs text-muted-light dark:text-muted-dark mt-0.5'>{user.bio || 'No bio yet'}</p>
+          <p className='font-bold text-lg text-gray-900 dark:text-white'>{user.name}</p>
+          <p className='text-sm text-gray-500 dark:text-gray-400 mt-1'>{user.bio || 'No bio yet'}</p>
         </div>
         <div className='flex gap-2'>
-          <button onClick={fetchAI} className='btn-ghost flex items-center gap-1 text-xs py-1.5'>
-            <Sparkles size={12} />{loading ? '...' : 'AI Match'}
+          <button 
+            onClick={fetchAI} 
+            className='flex items-center gap-2 text-xs font-semibold px-3 py-2 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-green-50 dark:hover:bg-gray-700 transition-colors'
+          >
+            <Sparkles size={14} className="text-green-500" />
+            {loading ? '...' : 'AI Match'}
           </button>
-          <button onClick={sendRequest} className='btn-primary text-xs py-1.5'>Request</button>
+          <button 
+            onClick={sendRequest} 
+            disabled={sent} 
+            className={`text-xs font-bold px-4 py-2 rounded-xl transition-all duration-300 ${
+              sent 
+                ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed' 
+                : 'bg-green-500 hover:bg-green-600 text-white shadow-lg shadow-green-500/20 active:scale-95'
+            }`}
+          >
+            {sent ? 'Sent ✓' : 'Request'}
+          </button>
         </div>
       </div>
-      <div className='flex flex-wrap gap-2 mb-2'>
+      
+      <div className='flex flex-wrap gap-2 mb-4'>
         {user.skillsOffered?.map(s => <SkillTag key={s} label={`Teaches ${s}`} variant='green' />)}
         {user.skillsWanted?.map(s => <SkillTag key={s} label={`Wants ${s}`} />)}
       </div>
-      {aiNote && <p className='text-xs text-muted-light dark:text-muted-dark mt-3 border-l-2 border-accent-light dark:border-accent-dark pl-3'>{aiNote}</p>}
+      
+      {aiNote && (
+        <div className='bg-green-50 dark:bg-green-900/10 border-l-2 border-green-500 pl-4 py-2 mt-4 animate-in fade-in slide-in-from-left-2 duration-500'>
+          <p className='text-xs text-green-800 dark:text-green-300 italic'>{aiNote}</p>
+        </div>
+      )}
     </div>
   )
 }

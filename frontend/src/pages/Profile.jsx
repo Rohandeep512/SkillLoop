@@ -90,8 +90,7 @@ export default function Profile() {
       {/* Reputation Footer */}
       <div className='bg-gray-50 dark:bg-gray-800/30 border border-gray-200 dark:border-gray-800 rounded-3xl p-8 flex items-center justify-between'>
         <div>
-          <p className='text-xs font-black uppercase tracking-widest text-gray-400 mb-1'>Reputation Score</p>
-          <p className='text-4xl font-black text-gray-900 dark:text-white'>{user.reputation}</p>
+          <p className='text-2xl font-semibold'>{user.reputation.toFixed(1)}<span className='text-sm text-muted-light dark:text-muted-dark font-normal'>/5</span></p>
         </div>
         <div className="text-right">
           <p className="text-sm font-bold text-gray-500">Based on {user.ratingsCount} ratings</p>

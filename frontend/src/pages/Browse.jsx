@@ -2,22 +2,31 @@ import { useEffect, useState } from 'react'
 import api from '../api/axios'
 import SkillCard from '../components/ui/SkillCard'
 import { Search } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
 
 export default function Browse() {
   const [users, setUsers] = useState([])
   const [search, setSearch] = useState('')
   const [query, setQuery] = useState('') // Separate state for button trigger
-
+  const { user: me } = useAuth()
   useEffect(() => {
     api.get('/users').then(r => setUsers(r.data)).catch(console.error)
   }, [])
 
   // Filter based on the 'query' state (which only updates on button click)
-  const filtered = users.filter(u =>
-    u.name?.toLowerCase().includes(query.toLowerCase()) ||
-    (u.skillsOffered || []).some(s => s.toLowerCase().includes(query.toLowerCase())) ||
-    (u.skillsWanted || []).some(s => s.toLowerCase().includes(query.toLowerCase()))
+  
+
+const filtered = users
+  .filter(u =>
+    u.skillsOffered.some(s => s.toLowerCase().includes(search.toLowerCase())) ||
+    u.skillsWanted.some(s => s.toLowerCase().includes(search.toLowerCase())) ||
+    u.name.toLowerCase().includes(search.toLowerCase())
   )
+  .sort((a, b) => {
+    const aMatch = me?.skillsOffered?.some(s => a.skillsWanted.includes(s)) && me?.skillsWanted?.some(s => a.skillsOffered.includes(s))
+    const bMatch = me?.skillsOffered?.some(s => b.skillsWanted.includes(s)) && me?.skillsWanted?.some(s => b.skillsOffered.includes(s))
+    return bMatch - aMatch
+  })
 
   return (
     /* Main Container with the same Bento Box aesthetic */
