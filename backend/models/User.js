@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   bio: { type: String, default: '' },
   avatar: { type: String, default: '' },
+  phone: { type: String, default: '' },
   skillsOffered: [{ type: String }],
   skillsWanted: [{ type: String }],
   reputation: { type: Number, default: 0 },

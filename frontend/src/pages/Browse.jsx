@@ -30,7 +30,7 @@ const filtered = users
 
   return (
     /* Main Container with the same Bento Box aesthetic */
-    <div className='bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-8 md:p-10 transition-all duration-300 hover:border-green-500/30'>
+    <div className='bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-8 md:p-10 transition-all duration-300 hover:border-green-500/30 hover:shadow-xl hover:shadow-black/5 dark:hover:shadow-green-500/5'>
       
       {/* Larger Header */}
       <h1 className='text-4xl font-black tracking-tighter mb-2 text-gray-900 dark:text-white'>Browse Skills</h1>
@@ -40,7 +40,7 @@ const filtered = users
       <div className='relative mb-10'>
         <Search className='absolute left-4 top-4 text-gray-400' size={22} />
         <input 
-          className='w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl py-4 pl-12 pr-32 text-lg outline-none focus:ring-2 focus:ring-green-500 transition-all' 
+          className='w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl py-4 pl-12 pr-32 text-lg outline-none focus:border-green-500 focus:bg-white dark:focus:bg-gray-900 transition-all focus:shadow-lg focus:shadow-green-500/10' 
           placeholder='Search by skill or name...' 
           value={search} 
           onChange={e => setSearch(e.target.value)}

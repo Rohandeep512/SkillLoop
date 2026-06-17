@@ -8,14 +8,24 @@ export default function SkillLoops() {
   const [joined, setJoined] = useState({})
   const { user } = useAuth()
 
-  useEffect(() => {
+useEffect(() => {
   api.get('/users/loops').then(r => {
     const all = r.data.loops
-    const sorted = [...all].sort((a, b) => {
-      const aIn = a.some(u => u._id === user?.id)
-      const bIn = b.some(u => u._id === user?.id)
-      return bIn - aIn
-    })
+
+    const rotateToUser = (loop) => {
+      const idx = loop.findIndex(u => u._id === user?.id)
+      if (idx <= 0) return loop
+      return [...loop.slice(idx), ...loop.slice(0, idx)]
+    }
+
+    const sorted = [...all]
+      .map(loop => rotateToUser(loop))
+      .sort((a, b) => {
+        const aIn = a[0]?._id === user?.id
+        const bIn = b[0]?._id === user?.id
+        return bIn - aIn
+      })
+
     setLoops(sorted)
   })
 }, [])
@@ -48,7 +58,7 @@ export default function SkillLoops() {
           {loops.map((loop, i) => {
             const inLoop = loop.some(u => u._id === user?.id)
             return (
-              <div key={i} className='bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-8 hover:border-green-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/5'>
+              <div key={i} className='bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-8 hover:border-green-500/30 transition-all duration-300 hover:shadow-xl hover:shadow-black/5 dark:hover:shadow-green-500/5'>
                 <div className="flex items-center justify-between mb-8">
                   <span className='text-xs font-black uppercase tracking-widest text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-500/10 px-3 py-1 rounded-full'>Loop #{i + 1}</span>
                   <RefreshCcw className="w-5 h-5 text-gray-400" />

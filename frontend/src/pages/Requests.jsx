@@ -11,20 +11,43 @@ export default function Requests() {
   const load = () => api.get('/barter/mine').then(r => setRequests(r.data))
   useEffect(() => { load() }, [])
 
-  const seen = new Set()
-  const active = requests.filter(r => {
+  // Filter out self-requests (sender === receiver) that may exist in DB
+  const valid = requests.filter(r => r.sender._id !== r.receiver._id)
+
+  // Active matches: accepted, deduplicated by user pair
+  const seenActive = new Set()
+  const active = valid.filter(r => {
     if (r.status !== 'accepted') return false
     const key = [r.sender._id, r.receiver._id].sort().join('-')
-    if (seen.has(key)) return false
-    seen.add(key)
+    if (seenActive.has(key)) return false
+    seenActive.add(key)
+    return true
+  })
+
+  // Incoming: pending requests where I am the receiver, deduplicated per sender
+  const seenIncoming = new Set()
+  const incoming = valid.filter(r => {
+    if (r.status !== 'pending' || r.receiver._id !== user.id) return false
+    if (seenIncoming.has(r.sender._id)) return false
+    seenIncoming.add(r.sender._id)
+    return true
+  })
+
+  // Sent: pending requests where I am the sender, deduplicated per receiver
+  const seenSent = new Set()
+  const sent = valid.filter(r => {
+    if (r.status !== 'pending' || r.sender._id !== user.id) return false
+    if (seenSent.has(r.receiver._id)) return false
+    seenSent.add(r.receiver._id)
     return true
   })
 
   const sections = [
-    { label: 'Incoming Requests', list: requests.filter(r => r.status === 'pending' && r.receiver._id === user.id), icon: Inbox },
+    { label: 'Incoming Requests', list: incoming, icon: Inbox },
     { label: 'Active Matches', list: active, icon: CheckCircle2 },
-    { label: 'Sent Requests', list: requests.filter(r => r.status === 'pending' && r.sender._id === user.id), icon: Send }
+    { label: 'Sent Requests', list: sent, icon: Send }
   ]
+
 
   return (
     <div className='bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-8 md:p-10 transition-all duration-300'>

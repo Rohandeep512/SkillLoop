@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../../api/axios'
 import { useAuth } from '../../context/AuthContext'
@@ -10,10 +10,31 @@ export default function SkillCard({ user }) {
   const navigate = useNavigate()
   const [aiNote, setAiNote] = useState('')
   const [loading, setLoading] = useState(false)
-  const [sent, setSent] = useState(() => user?._id ? !!localStorage.getItem(`sent_${user._id}`) : false)
+  const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
+
+  // Check on mount whether a request already exists between me and this user
+  useEffect(() => {
+    if (!me || !user?._id) return
+    // If me === user, treat as "sent" (disabled) to prevent self-requests
+    if (me.id === user._id) { setSent(true); return }
+
+    api.get('/barter/mine').then(({ data }) => {
+      const exists = data.some(r =>
+        (r.status === 'pending' || r.status === 'accepted') &&
+        (
+          (r.sender._id === me.id && r.receiver._id === user._id) ||
+          (r.sender._id === user._id && r.receiver._id === me.id)
+        )
+      )
+      if (exists) setSent(true)
+    }).catch(() => {})
+  }, [me, user?._id])
 
   const sendRequest = async () => {
     if (!me) return navigate('/login')
+    if (sent || sending) return
+    setSending(true)
     try {
         const { data: myProfile } = await api.get('/users/me')
         await api.post('/barter', {
@@ -22,8 +43,14 @@ export default function SkillCard({ user }) {
           skillWanted: user.skillsOffered?.[0] || 'General',
         })
         setSent(true)
-        localStorage.setItem(`sent_${user._id}`, true)
-    } catch (err) { console.error(err) }
+    } catch (err) {
+      // If backend says duplicate/conflict, mark as sent
+      if (err.response?.status === 409 || err.response?.status === 400) {
+        setSent(true)
+      }
+      console.error(err)
+    }
+    setSending(false)
   }
 
   const fetchAI = async () => {
@@ -52,14 +79,14 @@ export default function SkillCard({ user }) {
           </button>
           <button 
             onClick={sendRequest} 
-            disabled={sent} 
+            disabled={sent || sending} 
             className={`text-xs font-bold px-4 py-2 rounded-xl transition-all duration-300 ${
               sent 
                 ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed' 
                 : 'bg-green-500 hover:bg-green-600 text-white shadow-lg shadow-green-500/20 active:scale-95'
             }`}
           >
-            {sent ? 'Sent ✓' : 'Request'}
+            {sent ? 'Sent ✓' : sending ? '...' : 'Request'}
           </button>
         </div>
       </div>

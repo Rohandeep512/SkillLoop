@@ -48,6 +48,7 @@ export const getLoops = async (req, res) => {
   try {
     const users = await User.find().select('-password')
     const loops = detectLoops(users)
+    console.log('LOOPS:', JSON.stringify(loops.map(l => l.map(u => u.name))))
     res.json({ loops })
   } catch (err) {
     res.status(500).json({ message: err.message })

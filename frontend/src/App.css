@@ -4,29 +4,29 @@
 
 /* Modern "Slate & Emerald" Light Mode */
 :root {
-  /* Backgrounds: Move from washed-out gray to crisp contrast */
-  --bg-light: #f8fafc;        /* Slate-50: Crisp, clean base */
-  --surface-light: #ffffff;   /* Pure white cards */
+  /* Backgrounds: Deeper slate for contrast */
+  --bg-light: #F1F5F9;        /* Slate-100: Deep enough to show white cards */
+  --surface-light: #FFFFFF;   /* Pure white cards */
   
   /* Text: Deep, readable, and non-dull */
-  --text-light: #0f172a;      /* Deep Slate-900 */
-  --muted-light: #64748b;     /* Slate-500 */
+  --text-light: #0F172A;      /* Deep Slate-900 */
+  --muted-light: #64748B;     /* Slate-500 */
   
-  /* Accents: Vibrant and punchy */
-  --accent-light: #10b981;    /* Emerald-500 */
+  /* Accents: Vibrant Emerald */
+  --accent-light: #10B981;    /* Emerald-500 */
   
   /* Shadow: Add depth */
   --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
 /* Premium Dark Mode */
 .dark {
-  --bg-dark: #0a0a0a;         /* Deepest gray/black */
+  --bg-dark: #0A0A0A;         /* Deepest gray/black */
   --surface-dark: #121212;    /* Slightly elevated dark gray for cards */
   --border-dark: #262626;     /* Neutral dark border */
-  --text-dark: #f9fafb;       /* Pure white text */
-  --muted-dark: #9ca3af;      /* Soft gray for readable secondary text */
-  --accent-dark: #4ade80;     /* Bright green for dark backgrounds */
-  --primary-dark: #22c55e;    /* Slightly deeper green */
+  --text-dark: #F8FAFC;       /* Pure white text */
+  --muted-dark: #94A3B8;      /* Soft gray for readable secondary text */
+  --accent-dark: #34D399;     /* Bright green for dark backgrounds */
+  --primary-dark: #10B981;    /* Emerald */
 }
 
 /* Global Background Setup */
