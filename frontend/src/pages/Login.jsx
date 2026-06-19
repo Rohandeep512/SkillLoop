@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../api/axios'
 import { useAuth } from '../context/AuthContext'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const { login } = useAuth()
   const navigate = useNavigate()
 
@@ -29,7 +31,12 @@ export default function Login() {
       
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input className='w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-4 outline-none focus:ring-2 focus:ring-green-500' type='email' placeholder='Email' value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
-        <input className='w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-4 outline-none focus:ring-2 focus:ring-green-500' type='password' placeholder='Password' value={form.password} onChange={e => setForm({...form, password: e.target.value})} />
+        <div className="relative">
+          <input className='w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-4 pr-12 outline-none focus:ring-2 focus:ring-green-500' type={showPassword ? 'text' : 'password'} placeholder='Password' value={form.password} onChange={e => setForm({...form, password: e.target.value})} />
+          <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+        </div>
         <button className='w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-green-500/20 transition-all' type='submit'>Log in</button>
       </form>
       
