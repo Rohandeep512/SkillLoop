@@ -1,8 +1,22 @@
 # SkillLoop
 
+<table>
+  <tr>
+    <td colspan="2"><img width="100%" alt="SkillLoop Screenshot 1" src="PASTE_LINK_1_HERE" /></td>
+  </tr>
+  <tr>
+    <td width="50%"><img width="100%" alt="SkillLoop Screenshot 2" src="PASTE_LINK_2_HERE" /></td>
+    <td width="50%"><img width="100%" alt="SkillLoop Screenshot 3" src="PASTE_LINK_3_HERE" /></td>
+  </tr>
+</table>
+
 SkillLoop is an AI-powered peer-to-peer skill exchange platform that helps users learn new skills by teaching the skills they already possess.
 
 Instead of paying for courses or finding tutors, users can create barter requests, get matched with compatible learners, exchange knowledge, share resources, and build meaningful learning relationships.
+
+## Demo
+
+Live app: [SkillLoop on Vercel](https://skill-loop-connect.vercel.app/)
 
 ## Features
 
@@ -170,15 +184,44 @@ npm start
 
 ---
 
+## Project Structure
+
+```
+SkillLoop/
+│
+├── backend/
+│   ├── config/             # MongoDB connection setup
+│   ├── controllers/        # Auth, barter, matching, and AI controllers
+│   ├── middleware/         # JWT verification middleware
+│   ├── models/             # Mongoose schemas
+│   ├── routes/             # Express route definitions
+│   ├── utils/              # Helper utilities
+│   ├── package.json
+│   └── server.js           # Express app entry point
+│
+├── frontend/
+│   ├── public/
+│   ├── src/                # Components, pages, App.jsx, main.jsx
+│   ├── eslint.config.js
+│   ├── postcss.config.js
+│   ├── tailwind.config.js
+│   ├── vercel.json
+│   ├── vite.config.js
+│   └── package.json
+│
+└── README.md
+```
+
+---
+
 ## Future Enhancements
 
 * Skill ratings and reviews
 * Real-time chat
-* Video mentoring sessions
 * Learning progress tracking
-* AI-generated learning roadmaps
 * Reputation system
-* Multi-hop barter optimization
+* Leaderboard to highlight top contributors and active learners
+* Filter and sort matches by location or college
 
 ---
 
@@ -188,8 +231,14 @@ SkillLoop was built to make learning more accessible by enabling people to excha
 
 ---
 
-## Author
+## Author/Developer
 
-**Rohandeep Singh**
+Rohandeep Singh
 
-NSUT | Software Engineering Enthusiast | Full-Stack Developer
+NSUT | Full-Stack Developer
+
+LinkedIn: [Rohandeep Singh](https://www.linkedin.com/in/rohandeep-singh-283465323/)
+
+GitHub: [@Rohandeep512](https://github.com/Rohandeep512)
+
+⭐ If you found this project interesting, consider giving it a star!
