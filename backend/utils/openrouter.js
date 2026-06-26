@@ -26,13 +26,11 @@ export const getMatchExplanation = async (user1, user2) => {
   }
 };
 export const getRoadmap = async (skill) => {
-  // Add this line to check if the app can actually see your key!
-  console.log("KEY CHECK:", process.env.OPENROUTER_API_KEY ? "Key is loaded!" : "KEY IS MISSING/UNDEFINED!");
+  
   
   try {
     const client = getClient();
    
-    console.log("=== 2. SENDING TO OPENROUTER... ===");
     
     const prompt = `Create a concise learning roadmap for "${skill}" with 3 stages: Beginner, Intermediate, Advanced. For each stage list 3 topics and 1 free resource. Respond ONLY with pure JSON. Format: { "stages": [{ "level": "", "topics": [], "resource": "" }]}`;
 
@@ -42,7 +40,7 @@ export const getRoadmap = async (skill) => {
     });
 
     let text = response.choices[0].message.content;
-    console.log("=== 3. RAW AI RESPONSE ===\n", text);
+    
     
     const startIndex = text.indexOf('{');
     const endIndex = text.lastIndexOf('}');
@@ -55,10 +53,8 @@ export const getRoadmap = async (skill) => {
     }
 
   } catch (error) {
-    console.log("=== 4. ERROR CAUGHT! ===");
-    console.error("THE EXACT ERROR IS:", error.message || error);
+    console.error("Roadmap generation failed:", error.message || error);
     
-    // Notice how the fallback now uses the word you searched for!
     return {
       stages: [
         { level: "Beginner", topics: [`${skill} Basics`, "Basic Concepts", "Setup"], resource: "https://youtube.com" },
