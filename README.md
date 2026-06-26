@@ -2,11 +2,11 @@
 
 <table>
   <tr>
-    <td colspan="2"><img width="100%" alt="SkillLoop Screenshot 1" src="PASTE_LINK_1_HERE" /></td>
+    <td colspan="2"><img width="100%" alt="SkillLoop Screenshot 1" src="https://github.com/user-attachments/assets/76815fe5-b3c0-4341-ba69-756a434ca3f8" /></td>
   </tr>
   <tr>
-    <td width="50%"><img width="100%" alt="SkillLoop Screenshot 2" src="PASTE_LINK_2_HERE" /></td>
-    <td width="50%"><img width="100%" alt="SkillLoop Screenshot 3" src="PASTE_LINK_3_HERE" /></td>
+    <td width="50%"><img width="100%" alt="SkillLoop Screenshot 2" src="https://github.com/user-attachments/assets/da4768ea-dc5c-4ef6-960f-7d771a8cde98" /></td>
+    <td width="50%"><img width="100%" alt="SkillLoop Screenshot 3" src="https://github.com/user-attachments/assets/4a7cf332-4507-4940-b0b6-14111a408794" /></td>
   </tr>
 </table>
 
@@ -46,7 +46,7 @@ Live app: [SkillLoop on Vercel](https://skill-loop-connect.vercel.app/)
 
 ### Loop Detection
 
-* Detects circular skill-exchange chains.
+* Detects circular skill-exchange chains using DFS Algorithm.
 * Prevents invalid barter cycles.
 * Ensures fair and meaningful skill exchanges.
 
@@ -238,7 +238,5 @@ Rohandeep Singh
 NSUT | Full-Stack Developer
 
 LinkedIn: [Rohandeep Singh](https://www.linkedin.com/in/rohandeep-singh-283465323/)
-
-GitHub: [@Rohandeep512](https://github.com/Rohandeep512)
 
 ⭐ If you found this project interesting, consider giving it a star!
